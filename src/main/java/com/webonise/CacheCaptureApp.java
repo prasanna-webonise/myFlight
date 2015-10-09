@@ -8,9 +8,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-public class App extends Application {
+public class CacheCaptureApp extends Application {
 
-    private static final Logger LOG = LoggerFactory.getLogger(App.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CacheCaptureApp.class);
 
     public static void main(String[] args) {
         LOG.debug("Launching the Application");

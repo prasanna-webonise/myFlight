@@ -23,6 +23,7 @@
     <children>
         <VBox spacing="8">
             <children>
+                <Button fx:id="start" text="Start Application" onAction="#loadPage"></Button>
                 <TableView fx:id="listOfCacheSites" minWidth="300" VBox.vgrow="ALWAYS">
                     <columns>
                         <TableColumn fx:id="image" prefWidth="150" text="Image"/>
@@ -30,7 +31,7 @@
                     </columns>
                 </TableView>
                 <TextField promptText="Cache Area Name" fx:id="cachedSiteName"/>
-                <Button fx:id="saveButton" text="Save" onAction="#loadPage"/>
+                <Button fx:id="saveButton" text="Save" onAction="#saveCache"/>
             </children>
         </VBox>
         <VBox spacing="8" HBox.hgrow="ALWAYS">

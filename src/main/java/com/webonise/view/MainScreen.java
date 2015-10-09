@@ -1,22 +1,29 @@
 package com.webonise.view;
 
+import com.webonise.controller.MainController;
+import com.webonise.model.CacheRegion;
+import com.webonise.utils.DownloadWizard;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import netscape.javascript.JSObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.IOException;
 
-//@Component
-public class MainScreen  extends Pane{
+public class MainScreen extends Pane {
     private static final Logger LOG = LoggerFactory.getLogger(MainScreen.class);
-    private static final String MAIN_SCREEN_FXML ="/fxml/MainScreen.fxml" ;
+    private static final String MAIN_SCREEN_FXML = "/fxml/MainScreen.fxml";
+    private static final String MAIN_SCREEN_HTML = "/html/LatLangMarking.html";
 
     @FXML
     private TableView listOfCacheSites;
@@ -28,14 +35,15 @@ public class MainScreen  extends Pane{
     private TextField cachedSiteName;
 
     @FXML
-    private TableView siteImage;
+    private TableColumn image;
 
     @FXML
-    private TableView siteName;
+    private TableColumn cacheName;
 
     private WebEngine engine;
+    private JSObject script;
 
-    public MainScreen(){
+    public MainScreen() {
     }
 
     public Parent loadFxml() throws IOException {
@@ -44,9 +52,19 @@ public class MainScreen  extends Pane{
     }
 
     @FXML
-    public void loadPage(){
+    public void loadPage() {
         engine = browser.getEngine();
-        engine.load(getClass().getResource("/html/LatLangMarking.html").toExternalForm());
+        script = (JSObject) engine.executeScript("window");
+        script.setMember("centerCoordinates", new MainController().getLocation());
+        engine.load(getClass().getResource(MAIN_SCREEN_HTML).toExternalForm());
+        image.setCellValueFactory(new PropertyValueFactory<CacheRegion, File>("image"));
+        cacheName.setCellValueFactory(new PropertyValueFactory<CacheRegion,String>("cacheName"));
+        listOfCacheSites.setItems(new MainController().getSites());
+    }
+
+    @FXML
+    public void saveCache() throws IOException {
+        new DownloadWizard().download(cachedSiteName.getText());
     }
 
     public TableView getListOfCacheSites() {
@@ -73,28 +91,29 @@ public class MainScreen  extends Pane{
         this.cachedSiteName = cachedSiteName;
     }
 
-    public TableView getSiteImage() {
-        return siteImage;
-    }
-
-    public void setSiteImage(TableView siteImage) {
-        this.siteImage = siteImage;
-    }
-
-    public TableView getSiteName() {
-        return siteName;
-    }
-
-    public void setSiteName(TableView siteName) {
-        this.siteName = siteName;
-    }
-
     public WebEngine getEngine() {
         return engine;
     }
 
     public void setEngine(WebEngine engine) {
         this.engine = engine;
+    }
+
+
+    public TableColumn getImage() {
+        return image;
+    }
+
+    public void setImage(TableColumn image) {
+        this.image = image;
+    }
+
+    public TableColumn getCacheName() {
+        return cacheName;
+    }
+
+    public void setCacheName(TableColumn cacheName) {
+        this.cacheName = cacheName;
     }
 
 }
