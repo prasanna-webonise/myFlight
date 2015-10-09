@@ -32,3 +32,8 @@ function findCenter(){
 	centerCoordinates.setLongitude(bounds.getCenter().lng);
 	console.log(bounds.getCenter().lat);
 }
+
+function removeLayer(){
+	map.removeLayer(polygon);
+	polygon_points=[];
+}

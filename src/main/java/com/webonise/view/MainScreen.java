@@ -16,6 +16,7 @@ import javafx.scene.web.WebView;
 import netscape.javascript.JSObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,6 +43,8 @@ public class MainScreen extends Pane {
 
     private WebEngine engine;
     private JSObject script;
+    @Autowired
+    MainController mainController;
 
     public MainScreen() {
     }
@@ -58,13 +61,15 @@ public class MainScreen extends Pane {
         script.setMember("centerCoordinates", new MainController().getLocation());
         engine.load(getClass().getResource(MAIN_SCREEN_HTML).toExternalForm());
         image.setCellValueFactory(new PropertyValueFactory<CacheRegion, File>("image"));
-        cacheName.setCellValueFactory(new PropertyValueFactory<CacheRegion,String>("cacheName"));
+        cacheName.setCellValueFactory(new PropertyValueFactory<CacheRegion, String>("regionName"));
         listOfCacheSites.setItems(new MainController().getSites());
     }
 
     @FXML
     public void saveCache() throws IOException {
         new DownloadWizard().download(cachedSiteName.getText());
+        engine.executeScript("removeLayer()");
+        cachedSiteName.setText("");
     }
 
     public TableView getListOfCacheSites() {

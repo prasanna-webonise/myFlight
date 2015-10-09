@@ -9,11 +9,11 @@ public class Location {
     private float longitude;
     private float height;
 
-    private Location(){
+    private Location() {
     }
 
-    public static Location getInstance(){
-        if(instance==null){
+    public static Location getInstance() {
+        if (instance == null) {
             instance = new Location();
         }
         return instance;

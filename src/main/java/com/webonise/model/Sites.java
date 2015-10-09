@@ -5,10 +5,19 @@ import javafx.collections.ObservableList;
 
 public class Sites {
 
+    private static Sites instance;
+
+    public static Sites getInstance() {
+        if (instance == null) {
+            instance = new Sites();
+        }
+        return instance;
+    }
+
     private ObservableList<CacheRegion> cacheSites;
 
-    public Sites() {
-        cacheSites= FXCollections.observableArrayList();
+    private Sites() {
+        cacheSites = FXCollections.observableArrayList();
     }
 
     public ObservableList<CacheRegion> getCacheSites() {

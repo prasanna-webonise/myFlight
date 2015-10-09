@@ -1,10 +1,8 @@
 package com.webonise.controller;
 
-import com.webonise.model.CacheRegion;
 import com.webonise.model.Location;
 import com.webonise.model.Sites;
 import com.webonise.view.MainScreen;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -33,12 +31,12 @@ public class MainController {
         stage.show();
     }
 
-    public Location getLocation(){
+    public Location getLocation() {
         return Location.getInstance();
     }
 
-    public ObservableList getSites(){
-        return new Sites().getCacheSites();
+    public ObservableList getSites() {
+        return Sites.getInstance().getCacheSites();
     }
 
 }
