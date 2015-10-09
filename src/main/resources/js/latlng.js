@@ -28,7 +28,7 @@ function initialize(){
 
 function findCenter(){
 	var bounds = new L.latLngBounds(polygon_points);
-	centerCoordinates.setLattitude(bounds.getCenter().lat);
+	centerCoordinates.setLatitude(bounds.getCenter().lat);
 	centerCoordinates.setLongitude(bounds.getCenter().lng);
 	console.log(bounds.getCenter().lat);
 }

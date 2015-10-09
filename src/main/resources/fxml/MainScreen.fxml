@@ -1,32 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.web.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.web.WebView?>
-
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <HBox spacing="8" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8"
       fx:controller="com.webonise.view.MainScreen">
     <padding>
         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
     </padding>
-
     <children>
         <VBox spacing="8">
             <children>
                 <Button fx:id="start" text="Start Application" onAction="#loadPage"></Button>
                 <TableView fx:id="listOfCacheSites" minWidth="300" VBox.vgrow="ALWAYS">
                     <columns>
-                        <TableColumn fx:id="image" prefWidth="150" text="Image"></TableColumn>
+                        <TableColumn fx:id="image" prefWidth="150" text="Image">
+                            <ImageView fx:id="siteImage" fitHeight="58" fitWidth="58" pickOnBounds="true" preserveRatio="true">
+                                <Image url="@../images/sample.png"/>
+                            </ImageView>
+                        </TableColumn>
                         <TableColumn fx:id="cacheName" prefWidth="150" text="Name"/>
                     </columns>
                 </TableView>

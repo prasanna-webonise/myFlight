@@ -5,7 +5,7 @@ public class Location {
 
     private static Location instance;
 
-    private float lattitude;
+    private float latitude;
     private float longitude;
     private float height;
 
@@ -19,12 +19,12 @@ public class Location {
         return instance;
     }
 
-    public float getLattitude() {
-        return lattitude;
+    public float getLatitude() {
+        return latitude;
     }
 
-    public void setLattitude(float lattitude) {
-        this.lattitude = lattitude;
+    public void setLatitude(float latitude) {
+        this.latitude = latitude;
     }
 
     public float getLongitude() {

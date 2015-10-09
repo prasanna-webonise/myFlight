@@ -10,6 +10,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -41,10 +42,13 @@ public class MainScreen extends Pane {
     @FXML
     private TableColumn cacheName;
 
+    @FXML
+    private ImageView siteImage;
+
     private WebEngine engine;
     private JSObject script;
     @Autowired
-    MainController mainController;
+    private MainController mainController;
 
     public MainScreen() {
     }

@@ -23,7 +23,7 @@ public class DownloadWizard {
 
     public void download(String fileName) throws IOException {
         String path = DOWNLOAD_PATH_PART1 + Location.getInstance().getLongitude() + "," + Location.getInstance()
-                .getLattitude() + DOWNLOAD_PATH_PART2;
+                .getLatitude() + DOWNLOAD_PATH_PART2;
         URL url = new URL(path);
         File file = null;
         HttpURLConnection httpconn = (HttpURLConnection) url.openConnection();
