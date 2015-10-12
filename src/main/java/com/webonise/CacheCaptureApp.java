@@ -13,15 +13,15 @@ public class CacheCaptureApp extends Application {
     private static final Logger LOG = LoggerFactory.getLogger(CacheCaptureApp.class);
 
     public static void main(String[] args) {
-        LOG.debug("Launching the Application");
+        LOG.info("Launching the Application");
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        LOG.debug("Starting the application");
+        LOG.info("Starting the application");
         ApplicationContext context = new AnnotationConfigApplicationContext(AppConfiguration.class);
-        MainController controller = context.getBean(MainController.class);
-        controller.launch(primaryStage);
+        MainController mainController = context.getBean(MainController.class);
+        mainController.launch(primaryStage);
     }
 }

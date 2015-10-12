@@ -16,10 +16,9 @@ public class MainController {
 
     private static final String APP_TITLE = "CACHE CAPTURE";
 
-    MainScreen screen = new MainScreen();
-    Stage stage;
-    Scene scene;
-
+    private MainScreen screen = new MainScreen();
+    private Stage stage;
+    private Scene scene;
 
     public void launch(Stage primaryStage) throws IOException {
         stage = new Stage(StageStyle.DECORATED);

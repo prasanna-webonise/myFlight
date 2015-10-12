@@ -7,7 +7,6 @@ public class Location {
 
     private float latitude;
     private float longitude;
-    private float height;
 
     private Location() {
     }
@@ -35,11 +34,4 @@ public class Location {
         this.longitude = longitude;
     }
 
-    public float getHeight() {
-        return height;
-    }
-
-    public void setHeight(float height) {
-        this.height = height;
-    }
 }

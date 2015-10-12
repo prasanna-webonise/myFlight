@@ -50,16 +50,13 @@ public class MainScreen extends Pane {
     @Autowired
     private MainController mainController;
 
-    public MainScreen() {
-    }
-
     public Parent loadFxml() throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource(MAIN_SCREEN_FXML));
-        return root;
+        return FXMLLoader.load(getClass().getResource(MAIN_SCREEN_FXML));
     }
 
     @FXML
     public void loadPage() {
+        LOG.info("Loading the HTML page");
         engine = browser.getEngine();
         script = (JSObject) engine.executeScript("window");
         script.setMember("centerCoordinates", new MainController().getLocation());
@@ -71,7 +68,7 @@ public class MainScreen extends Pane {
 
     @FXML
     public void saveCache() throws IOException {
-        new DownloadWizard().download(cachedSiteName.getText());
+        new DownloadWizard().downloadCacheImage(cachedSiteName.getText());
         engine.executeScript("removeLayer()");
         cachedSiteName.setText("");
     }

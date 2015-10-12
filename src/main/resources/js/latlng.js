@@ -18,7 +18,7 @@ function initialize(){
 	};
 	map.on('click', function(e) {
 		console.log(e.latlng);
-		if(polygon!=null)
+		if(polygon)
 		map.removeLayer(polygon);
 		polygon_points.push([e.latlng.lat,e.latlng.lng]);
 		polygon = L.polygon(polygon_points, polygon_options).addTo(map);
