@@ -8,15 +8,14 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.web.WebView?>
-<HBox spacing="8" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8"
-      fx:controller="com.webonise.view.MainScreen">
+<HBox spacing="8" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
     <padding>
         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
     </padding>
     <children>
         <VBox spacing="8">
             <children>
-                <Button fx:id="start" text="Start Application" onAction="#loadPage"></Button>
+                <Button fx:id="start" text="Start Application"></Button>
                 <TableView fx:id="listOfCacheSites" minWidth="300" VBox.vgrow="ALWAYS">
                     <columns>
                         <TableColumn fx:id="image" prefWidth="150" text="Image"></TableColumn>
@@ -24,7 +23,7 @@
                     </columns>
                 </TableView>
                 <TextField promptText="Cache Area Name" fx:id="cachedSiteName"/>
-                <Button fx:id="saveButton" text="Save" onAction="#saveCache"/>
+                <Button fx:id="saveButton" text="Save"/>
             </children>
         </VBox>
         <VBox spacing="8" HBox.hgrow="ALWAYS">
@@ -34,3 +33,4 @@
         </VBox>
     </children>
 </HBox>
+

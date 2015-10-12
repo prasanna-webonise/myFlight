@@ -2,17 +2,10 @@ package com.webonise.model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.springframework.stereotype.Component;
 
+@Component
 public class Sites {
-
-    private static Sites instance;
-
-    public static Sites getInstance() {
-        if (instance == null) {
-            instance = new Sites();
-        }
-        return instance;
-    }
 
     private ObservableList<CacheRegion> cacheSites;
 

@@ -1,12 +1,10 @@
 package com.webonise.controller;
 
-import com.webonise.model.Location;
-import com.webonise.model.Sites;
 import com.webonise.view.MainScreen;
-import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -16,26 +14,19 @@ public class MainController {
 
     private static final String APP_TITLE = "CACHE CAPTURE";
 
-    private MainScreen screen = new MainScreen();
+    @Autowired
+    private MainScreen mainScreen;
+
     private Stage stage;
     private Scene scene;
 
     public void launch(Stage primaryStage) throws IOException {
         stage = new Stage(StageStyle.DECORATED);
-        scene = new Scene(screen.loadFxml());
+        scene = new Scene(mainScreen);
         stage.setTitle(APP_TITLE);
         stage.initOwner(primaryStage);
         stage.setScene(scene);
         stage.setMaximized(true);
         stage.show();
     }
-
-    public Location getLocation() {
-        return Location.getInstance();
-    }
-
-    public ObservableList getSites() {
-        return Sites.getInstance().getCacheSites();
-    }
-
 }

@@ -1,22 +1,12 @@
 package com.webonise.model;
 
+import org.springframework.stereotype.Component;
 
+@Component
 public class Location {
-
-    private static Location instance;
 
     private float latitude;
     private float longitude;
-
-    private Location() {
-    }
-
-    public static Location getInstance() {
-        if (instance == null) {
-            instance = new Location();
-        }
-        return instance;
-    }
 
     public float getLatitude() {
         return latitude;

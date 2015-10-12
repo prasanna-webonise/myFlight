@@ -1,9 +1,11 @@
-package com.webonise.utils;
+package com.webonise.util;
 
 import com.webonise.model.CacheRegion;
 import com.webonise.model.Location;
 import com.webonise.model.Sites;
 import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -12,7 +14,13 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+@Component
 public class DownloadWizard {
+
+    @Autowired
+    private Sites sites;
+    @Autowired
+    private Location location;
 
     private static final String DOWNLOAD_FOLDER =
             "D:\\dev\\WorkSpace\\inFlight\\SampleCache\\src\\main\\resources\\images\\";
@@ -24,21 +32,25 @@ public class DownloadWizard {
     public void downloadCacheImage(String fileName) throws IOException {
         String path = getDownloadSourcePath();
         URL url = new URL(path);
-        File file = null;
         HttpURLConnection httpconn = getHttpURLConnection(url);
-        file = new File(DOWNLOAD_FOLDER + fileName + IMAGE_FILE_EXTENSION);
         InputStream inputStream = httpconn.getInputStream();
+        copyFileToDestination(fileName, inputStream);
+        closeHttpURLConnection(httpconn);
+    }
+
+    private void copyFileToDestination(String fileName, InputStream inputStream) throws IOException {
+        File file;
+        file = new File(DOWNLOAD_FOLDER + fileName + IMAGE_FILE_EXTENSION);
         FileOutputStream outputStream = new FileOutputStream(file);
         IOUtils.copy(inputStream, outputStream);
         addCacheRegionObjectToSites(fileName, file);
-        closeHttpURLConnection(httpconn);
     }
 
     private void addCacheRegionObjectToSites(String fileName, File file) {
         CacheRegion cacheRegion = new CacheRegion();
         cacheRegion.setImage(file);
         cacheRegion.setRegionName(fileName);
-        Sites.getInstance().getCacheSites().add(cacheRegion);
+        sites.getCacheSites().add(cacheRegion);
     }
 
     private void closeHttpURLConnection(HttpURLConnection httpconn) {
@@ -46,7 +58,7 @@ public class DownloadWizard {
     }
 
     private String getDownloadSourcePath() {
-        return DOWNLOAD_PATH_PREFIX + Location.getInstance().getLongitude() + "," + Location.getInstance()
+        return DOWNLOAD_PATH_PREFIX + location.getLongitude() + "," + location
                 .getLatitude() + DOWNLOAD_PATH_SUFFIX;
     }
 
