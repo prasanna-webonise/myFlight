@@ -8,14 +8,13 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.web.WebView?>
-<HBox spacing="8" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+<fx:root type="javafx.scene.layout.HBox" xmlns:fx="javafx.com/fxml">
     <padding>
         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
     </padding>
     <children>
         <VBox spacing="8">
             <children>
-                <Button fx:id="start" text="Start Application"></Button>
                 <TableView fx:id="listOfCacheSites" minWidth="300" VBox.vgrow="ALWAYS">
                     <columns>
                         <TableColumn fx:id="image" prefWidth="150" text="Image"></TableColumn>
@@ -32,5 +31,5 @@
             </children>
         </VBox>
     </children>
-</HBox>
+</fx:root>
 

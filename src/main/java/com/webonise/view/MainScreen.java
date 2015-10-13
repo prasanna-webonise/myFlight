@@ -1,6 +1,5 @@
 package com.webonise.view;
 
-import com.webonise.controller.MainController;
 import com.webonise.model.CacheRegion;
 import com.webonise.model.Location;
 import com.webonise.model.Sites;
@@ -9,14 +8,15 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.HBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import netscape.javascript.JSObject;
@@ -30,7 +30,7 @@ import java.io.File;
 import java.io.IOException;
 
 @Component
-public class MainScreen extends Pane {
+public class MainScreen extends HBox {
 
     private static final Logger LOG = LoggerFactory.getLogger(MainScreen.class);
     private static final String MAIN_SCREEN_FXML = "/fxml/MainScreen.fxml";
@@ -55,13 +55,13 @@ public class MainScreen extends Pane {
     private ImageView siteImage;
 
     @FXML
+    private Image imageUrl;
+
+    @FXML
     private Button start;
 
     @FXML
     private Button saveButton;
-
-    @Autowired
-    private MainController mainController;
 
     @Autowired
     private DownloadWizard downloader;
@@ -78,6 +78,7 @@ public class MainScreen extends Pane {
     public MainScreen(){
         super();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(MAIN_SCREEN_FXML));
+        fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         try {
             fxmlLoader.load();
@@ -88,17 +89,13 @@ public class MainScreen extends Pane {
 
     @PostConstruct
     public void init(){
-        start.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                engine = browser.getEngine();
-                script = (JSObject) engine.executeScript("window");
-                script.setMember("centerCoordinates", location);
-                engine.load(getClass().getResource(MAIN_SCREEN_HTML).toExternalForm());
-                image.setCellValueFactory(new PropertyValueFactory<CacheRegion, File>("image"));
-                cacheName.setCellValueFactory(new PropertyValueFactory<CacheRegion, String>("regionName"));
-                listOfCacheSites.setItems(sites.getCacheSites());
-            }
-        });
+        engine = browser.getEngine();
+        script = (JSObject) engine.executeScript("window");
+        script.setMember("centerCoordinates", location);
+        engine.load(getClass().getResource(MAIN_SCREEN_HTML).toExternalForm());
+        image.setCellValueFactory(new PropertyValueFactory<CacheRegion, File>("image"));
+        cacheName.setCellValueFactory(new PropertyValueFactory<CacheRegion, String>("regionName"));
+        listOfCacheSites.setItems(sites.getCacheSites());
 
         saveButton.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
@@ -111,10 +108,5 @@ public class MainScreen extends Pane {
                 cachedSiteName.setText("");
             }
         });
-    }
-
-    public Parent loadFxml() throws IOException {
-        return FXMLLoader.load(getClass().getResource(MAIN_SCREEN_FXML));
-
     }
 }
