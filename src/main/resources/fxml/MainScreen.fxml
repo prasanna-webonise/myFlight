@@ -9,9 +9,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.web.WebView?>
 <fx:root type="javafx.scene.layout.HBox" xmlns:fx="javafx.com/fxml">
-    <padding>
-        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-    </padding>
     <children>
         <VBox spacing="8">
             <children>
