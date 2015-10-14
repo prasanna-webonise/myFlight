@@ -1,19 +1,20 @@
 package com.webonise.view;
 
-import com.webonise.model.CacheRegion;
 import com.webonise.model.Location;
 import com.webonise.model.Sites;
+import com.webonise.model.WebEngineStatus;
 import com.webonise.util.DownloadWizard;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Worker;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -26,7 +27,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.io.File;
 import java.io.IOException;
 
 @Component
@@ -34,10 +34,12 @@ public class MainScreen extends HBox {
 
     private static final Logger LOG = LoggerFactory.getLogger(MainScreen.class);
     private static final String MAIN_SCREEN_FXML = "/fxml/MainScreen.fxml";
-    private static final String MAIN_SCREEN_HTML = "/html/LatLangMarking.html";
+    private static final String MAIN_SCREEN_HTML = "/html/mapRegion.html";
+    private static final String REMOVE_LAYER = "removeLayer()";
+    private static final String BLANK_STRING = "";
 
     @FXML
-    private TableView listOfCacheSites;
+    private ListView listOfCacheSites;
 
     @FXML
     private WebView browser;
@@ -46,19 +48,13 @@ public class MainScreen extends HBox {
     private TextField cachedSiteName;
 
     @FXML
-    private TableColumn image;
-
-    @FXML
-    private TableColumn cacheName;
-
-    @FXML
     private ImageView siteImage;
 
     @FXML
-    private Image imageUrl;
+    private Label cacheName;
 
     @FXML
-    private Button start;
+    private Image image;
 
     @FXML
     private Button saveButton;
@@ -73,9 +69,9 @@ public class MainScreen extends HBox {
     private Sites sites;
 
     private WebEngine engine;
-    private JSObject script;
+    private WebEngineStatus webEngineStatus;
 
-    public MainScreen(){
+    public MainScreen() {
         super();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(MAIN_SCREEN_FXML));
         fxmlLoader.setRoot(this);
@@ -83,29 +79,48 @@ public class MainScreen extends HBox {
         try {
             fxmlLoader.load();
         } catch (IOException e) {
-            LOG.error("Exception occured while loading UI : {}",e.getMessage());
+            LOG.error("Exception occured while loading UI : {}", e);
         }
     }
 
     @PostConstruct
-    public void init(){
+    public void init() {
+        loadMapPage();
+        setButtonActions();
+    }
+
+    private void loadMapPage() {
+        JSObject script;
         engine = browser.getEngine();
+        engine.getLoadWorker().stateProperty().addListener(new ChangeListener<Worker.State>() {
+            public void changed(ObservableValue<? extends Worker.State> observable, Worker.State oldValue, Worker
+                    .State newValue) {
+                if (newValue == Worker.State.SUCCEEDED) {
+                    webEngineStatus = WebEngineStatus.ON;
+                } else {
+                    webEngineStatus = WebEngineStatus.OFF;
+                }
+            }
+        });
         script = (JSObject) engine.executeScript("window");
         script.setMember("centerCoordinates", location);
         engine.load(getClass().getResource(MAIN_SCREEN_HTML).toExternalForm());
-        image.setCellValueFactory(new PropertyValueFactory<CacheRegion, File>("image"));
-        cacheName.setCellValueFactory(new PropertyValueFactory<CacheRegion, String>("regionName"));
-        listOfCacheSites.setItems(sites.getCacheSites());
+    }
 
+    private void setButtonActions() {
         saveButton.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
                 try {
                     downloader.downloadCacheImage(cachedSiteName.getText());
                 } catch (IOException e) {
-                    LOG.error("Exception occured while downloading : {}", e.getMessage());
+                    LOG.error("Exception occured while downloading : {}", e);
                 }
-                engine.executeScript("removeLayer()");
-                cachedSiteName.setText("");
+                if (webEngineStatus == WebEngineStatus.ON) {
+                    engine.executeScript(REMOVE_LAYER);
+                    cachedSiteName.setText(BLANK_STRING);
+                } else {
+                    LOG.error("Network offline");
+                }
             }
         });
     }

@@ -18,10 +18,9 @@ public class MainController extends Pane {
     @Autowired
     private MainScreen mainScreen;
 
-    private Stage stage;
-    private Scene scene;
-
     public void launch(Stage primaryStage) throws IOException {
+        Stage stage;
+        Scene scene;
         stage = new Stage(StageStyle.DECORATED);
         scene = new Scene(mainScreen);
         stage.setTitle(APP_TITLE);

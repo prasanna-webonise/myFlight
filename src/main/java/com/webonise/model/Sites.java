@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class Sites {
 
-    private ObservableList<CacheRegion> cacheSites;
+    private final ObservableList<CacheRegion> cacheSites;
 
-    private Sites() {
+    public Sites() {
         cacheSites = FXCollections.observableArrayList();
     }
 
@@ -17,7 +17,4 @@ public class Sites {
         return cacheSites;
     }
 
-    public void setCacheSites(ObservableList<CacheRegion> cacheSites) {
-        this.cacheSites = cacheSites;
-    }
 }

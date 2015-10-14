@@ -1,7 +1,7 @@
-var polygon_points = new Array();
+var polygonPoints = [];
 var map;
 var marker;
-var polygon_options;
+var polygonOptions;
 var polygon;
 var centerCoordinates;
 
@@ -13,21 +13,21 @@ function initialize(){
     	.setView([18.5203,73.8567], 4);
 	marker = new L.Marker(new L.LatLng(18.5203,73.8567));
 	map.addLayer(marker);
-	polygon_options = {
+	polygonOptions = {
     	color: '#000'
 	};
 	map.on('click', function(e) {
 		console.log(e.latlng);
 		if(polygon)
 		map.removeLayer(polygon);
-		polygon_points.push([e.latlng.lat,e.latlng.lng]);
-		polygon = L.polygon(polygon_points, polygon_options).addTo(map);
+		polygonPoints.push([e.latlng.lat,e.latlng.lng]);
+		polygon = L.polygon(polygonPoints, polygonOptions).addTo(map);
 		findCenter();
 	});
 }
 
 function findCenter(){
-	var bounds = new L.latLngBounds(polygon_points);
+	var bounds = new L.latLngBounds(polygonPoints);
 	centerCoordinates.setLatitude(bounds.getCenter().lat);
 	centerCoordinates.setLongitude(bounds.getCenter().lng);
 	console.log(bounds.getCenter().lat);
@@ -35,5 +35,5 @@ function findCenter(){
 
 function removeLayer(){
 	map.removeLayer(polygon);
-	polygon_points=[];
+	polygonPoints=[];
 }

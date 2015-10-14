@@ -27,12 +27,12 @@ public class CacheRegion {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
+    public boolean equals(Object object) {
+        if (this == object) return true;
 
-        if (o == null || getClass() != o.getClass()) return false;
+        if (object == null || getClass() != object.getClass()) return false;
 
-        CacheRegion that = (CacheRegion) o;
+        CacheRegion that = (CacheRegion) object;
 
         return new EqualsBuilder()
                 .append(regionName, that.regionName)
