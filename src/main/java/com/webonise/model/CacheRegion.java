@@ -28,15 +28,19 @@ public class CacheRegion {
 
     @Override
     public boolean equals(Object object) {
-        if (this == object) return true;
+        if (this == object) {
+            return true;
+        }
 
-        if (object == null || getClass() != object.getClass()) return false;
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
 
-        CacheRegion that = (CacheRegion) object;
+        CacheRegion cacheRegion = (CacheRegion) object;
 
         return new EqualsBuilder()
-                .append(regionName, that.regionName)
-                .append(image, that.image)
+                .append(regionName, cacheRegion.regionName)
+                .append(image, cacheRegion.image)
                 .isEquals();
     }
 

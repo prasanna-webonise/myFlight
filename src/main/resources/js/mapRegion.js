@@ -18,8 +18,9 @@ function initialize(){
 	};
 	map.on('click', function(e) {
 		console.log(e.latlng);
-		if(polygon)
-		map.removeLayer(polygon);
+		if(polygon){
+			map.removeLayer(polygon);
+		}
 		polygonPoints.push([e.latlng.lat,e.latlng.lng]);
 		polygon = L.polygon(polygonPoints, polygonOptions).addTo(map);
 		findCenter();

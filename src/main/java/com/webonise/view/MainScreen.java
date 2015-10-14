@@ -1,22 +1,20 @@
 package com.webonise.view;
 
+import com.webonise.controller.MainController;
 import com.webonise.model.Location;
 import com.webonise.model.Sites;
 import com.webonise.model.WebEngineStatus;
-import com.webonise.util.DownloadWizard;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker;
+import javafx.concurrent.Worker.State;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -48,25 +46,16 @@ public class MainScreen extends HBox {
     private TextField cachedSiteName;
 
     @FXML
-    private ImageView siteImage;
-
-    @FXML
-    private Label cacheName;
-
-    @FXML
-    private Image image;
-
-    @FXML
     private Button saveButton;
-
-    @Autowired
-    private DownloadWizard downloader;
 
     @Autowired
     private Location location;
 
     @Autowired
     private Sites sites;
+
+    @Autowired
+    private MainController mainController;
 
     private WebEngine engine;
     private WebEngineStatus webEngineStatus;
@@ -87,15 +76,14 @@ public class MainScreen extends HBox {
     public void init() {
         loadMapPage();
         setButtonActions();
+        listOfCacheSites.setItems(sites.getCacheSites());
     }
-
     private void loadMapPage() {
         JSObject script;
         engine = browser.getEngine();
         engine.getLoadWorker().stateProperty().addListener(new ChangeListener<Worker.State>() {
-            public void changed(ObservableValue<? extends Worker.State> observable, Worker.State oldValue, Worker
-                    .State newValue) {
-                if (newValue == Worker.State.SUCCEEDED) {
+            public void changed(ObservableValue<? extends State> observable, State oldValue, State newValue) {
+                if (newValue == State.SUCCEEDED) {
                     webEngineStatus = WebEngineStatus.ON;
                 } else {
                     webEngineStatus = WebEngineStatus.OFF;
@@ -111,9 +99,9 @@ public class MainScreen extends HBox {
         saveButton.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
                 try {
-                    downloader.downloadCacheImage(cachedSiteName.getText());
+                    mainController.downloadSiteImage(cachedSiteName.getText());
                 } catch (IOException e) {
-                    LOG.error("Exception occured while downloading : {}", e);
+                    LOG.error("Exception occurred while downloading the file : {}",e);
                 }
                 if (webEngineStatus == WebEngineStatus.ON) {
                     engine.executeScript(REMOVE_LAYER);

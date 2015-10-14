@@ -23,7 +23,7 @@ public class DownloadWizard {
     private Location location;
 
     private static final String DOWNLOAD_FOLDER =
-            "D:\\dev\\WorkSpace\\inFlight\\SampleCache\\src\\main\\resources\\images\\";
+            "\\src\\main\\resources\\images\\";
     private static final String DOWNLOAD_PATH_PREFIX = "https://api.mapbox.com/v4/mapbox.streets/";
     private static final String DOWNLOAD_PATH_SUFFIX = ",7/500x300.png?access_token=pk" +
             ".eyJ1IjoicHJhc2FuMjg5MyIsImEiOiJjaWZmN3AxbmE3emt0c2trbnZqcGN4bTl6In0.LJ220L_6CnwOfS5sAStp-g";
@@ -40,7 +40,8 @@ public class DownloadWizard {
 
     private void copyFileToDestination(String fileName, InputStream inputStream) throws IOException {
         File file;
-        file = new File(DOWNLOAD_FOLDER + fileName + IMAGE_FILE_EXTENSION);
+        //file = new File(DOWNLOAD_FOLDER + fileName + IMAGE_FILE_EXTENSION);
+        file = new File(System.getProperty("user.dir")+DOWNLOAD_FOLDER+fileName+IMAGE_FILE_EXTENSION);
         FileOutputStream outputStream = new FileOutputStream(file);
         IOUtils.copy(inputStream, outputStream);
         addCacheRegionObjectToSites(fileName, file);

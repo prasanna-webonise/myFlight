@@ -1,5 +1,6 @@
 package com.webonise.controller;
 
+import com.webonise.util.DownloadWizard;
 import com.webonise.view.MainScreen;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -18,14 +19,19 @@ public class MainController extends Pane {
     @Autowired
     private MainScreen mainScreen;
 
+    @Autowired
+    private DownloadWizard downloader;
+
     public void launch(Stage primaryStage) throws IOException {
-        Stage stage;
-        Scene scene;
-        stage = new Stage(StageStyle.DECORATED);
-        scene = new Scene(mainScreen);
+        Stage stage =new Stage(StageStyle.DECORATED);;
+        Scene scene= new Scene(mainScreen);;
         stage.setTitle(APP_TITLE);
         stage.initOwner(primaryStage);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void downloadSiteImage(String cachedSiteName) throws IOException {
+        downloader.downloadCacheImage(cachedSiteName);
     }
 }
