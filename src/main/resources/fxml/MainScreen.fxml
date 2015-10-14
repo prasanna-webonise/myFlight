@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.web.WebView?>
+<fx:root type="javafx.scene.layout.HBox" xmlns:fx="javafx.com/fxml">
+    <children>
+        <VBox spacing="8">
+            <children>
+                <ListView fx:id="listOfCacheSites" VBox.vgrow="ALWAYS">
+                    <HBox fx:id="list">
+                        <ImageView fx:id="siteImage" fitHeight="56" fitWidth="56" pickOnBounds="true" preserveRatio="true" >
+                            <Image fx:id="image" url="@../images/.png"/>
+                        </ImageView>
+                        <Label fx:id="cacheName" prefWidth="150" text="Name"/>
+                    </HBox>
+                </ListView>
+                <TextField promptText="Cache Area Name" fx:id="cachedSiteName"/>
+                <Button fx:id="saveButton" text="Save"/>
+            </children>
+        </VBox>
+        <VBox spacing="8" HBox.hgrow="ALWAYS">
+            <children>
+                <WebView fx:id="browser" VBox.vgrow="ALWAYS"/>
+            </children>
+        </VBox>
+    </children>
+</fx:root>
+
