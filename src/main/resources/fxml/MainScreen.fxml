@@ -22,7 +22,7 @@
                     </HBox>
                 </ListView>
                 <TextField promptText="Cache Area Name" fx:id="cachedSiteName"/>
-                <Button fx:id="saveButton" text="Save"/> 
+                <Button fx:id="saveButton" text="Save"/>
             </children>
         </VBox>
         <VBox spacing="8" HBox.hgrow="ALWAYS">
